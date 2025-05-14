@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Eventos</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Firebase SDKs -->
+<script src="./js/sdk_firebase.js" type='module'></script>
+
+
+</head>
+
+<body>
+
+
+    <div class="agenda">
+        <div id="cabecalho">
+            <input type="button" id="mes"> <b> \ </b> <input type="number" id="ano">
+        </div>
+        <div class="calendario"></div>
+
+        <div class="legenda">
+            <p><span style="color: red">■</span> Data selecionada</p>
+            <p><span style="color: #000059">■</span> Evento do grupo UMADEB</p>
+            <p><span style="color: #5E287C">■</span> Evento do grupo CREIO</p>
+        </div>
+    </div>
+
+    <div class="event">
+        <h2 id="event-date">Eventos do dia</h2>
+        <div id="event-list"> </div>
+        <div id="event-detail">Selecione um evento para mais detalhes...</div>
+    </div>
+
+
+    <script src="js/script.js" type='module'></script>
+</body>
+
+</html>
