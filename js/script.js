@@ -111,6 +111,8 @@ async function generateCalendario () {
         div.classList.add('ambos') // se tiver evento dos 2 grupos
       else if (grupos.includes('UMADEB'))
         div.classList.add('umadeb') // se tiver evento umadeb
+      else if (grupos.includes('UMADEB E CREIO'))
+        div.classList.add('ambos') // se tiver evento dos 2 grupos
       else if (grupos.includes('CREIO')) div.classList.add('creio') // se tiver evento creio
     }
 

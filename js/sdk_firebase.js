@@ -52,7 +52,8 @@ export async function buscarEventosDoMesAtual (year, month) {
     const evento = {
       grupo: doc.data().grupo.toUpperCase(),
       titulo: doc.data().titulo,
-      detalhe: doc.data().detalhes
+      detalhe: doc.data().detalhes,
+      id: doc.id
     }
 
     // Adiciona ao objeto final, agrupando por data

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form-evento">
+      <h2>Cadastrar Evento</h2>
+
+      <label for="grupo">Grupo:</label>
+      <select id="grupo" required>
+        <option value="UMADEB">UMADEB</option>
+        <option value="CREIO">CREIO</option>
+        <option value="UMADEB e CREIO">UMADEB e CREIO</option>
+      </select>
+
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" required />
+
+      <label for="detalhes">Detalhes:</label>
+      <textarea id="detalhes" required></textarea>
+
+      <label for="data">Data:</label>
+      <input type="date" id="data" value = '' required />
+
+      <button type="submit">Salvar Evento</button>
+    </form>
+
+    <script src="./js/sdk_firebase.js" type="module"></script>
+    <script src="js/formulario.js" type="module"></script>
+  </body>
+</html>
