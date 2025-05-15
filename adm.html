@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="css/style_adm.css" />
+
+    <title>Cadastro de eventos</title>
   </head>
   <body>
     <form id="form-evento">
@@ -17,13 +19,67 @@
       </select>
 
       <label for="titulo">Título:</label>
-      <input type="text" id="titulo" required />
+      <input type="text" id="titulo" required autocomplete="off"/>
 
       <label for="detalhes">Detalhes:</label>
       <textarea id="detalhes" required></textarea>
 
-      <label for="data">Data:</label>
-      <input type="date" id="data" value = '' required />
+      <label for="data"
+        >Data: (evento recorrente ?
+        <input type="checkbox" name="tipo" id="tipo_evento" />)</label
+      >
+      <div id="divisoria">
+        <div id="tipo_data">
+          <input type="date" id="data" value="" />
+        </div>
+        
+        <div id="tipo_recorrente" style="display: none;">
+
+          <label> Ano: </label>
+          <input type="number" id="ano">
+
+          <label>
+            Dia da semana:
+          <select id="grupo">
+            <option value="1">1º Semana</option>
+            <option value="2">2º Semana</option>
+            <option value="3">3º Semana</option>
+            <option value="4">4º Semana</option>
+            <option value="5">5º Semana</option>
+          </select></label>
+
+          <div class="day-selector-compact">
+          <label>
+            S
+            <input type="radio" name="dia_semana" value="segunda" />
+          </label>
+          <label>
+            T
+            <input type="radio" name="dia_semana" value="terca" />
+          </label>
+          <label>
+            Q
+            <input type="radio" name="dia_semana" value="quarta" />
+          </label>
+          <label>
+            Q
+            <input type="radio" name="dia_semana" value="quinta" />
+          </label>
+          <label>
+            S
+            <input type="radio" name="dia_semana" value="sexta" />
+          </label>
+          <label>
+            S
+            <input type="radio" name="dia_semana" value="sabado" />
+          </label>
+          <label>
+            D
+            <input type="radio" name="dia_semana" value="domingo" checked />
+          </label>
+        </div>
+      </div>
+      </div>
 
       <button type="submit">Salvar Evento</button>
     </form>

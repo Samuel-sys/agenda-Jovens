@@ -1,0 +1,91 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #084c61;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #444;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button {
+  width: 100%;
+  background-color: #0066cc;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0052a3;
+}
+
+  .day-selector-compact {
+    display: flex; /* Organiza os elementos filhos (labels) em linha */
+    gap: 10px; /* Adiciona um pequeno espaço entre os dias */
+    justify-content: center; /* Centraliza o grupo de dias (opcional) */
+    align-items: flex-start; /* Alinha os itens pelo topo */
+  }
+
+  .day-selector-compact label {
+    display: flex; /* Torna cada label um container flexível */
+    flex-direction: column; /* Organiza os elementos filhos (letra e input) em coluna */
+    align-items: center; /* Centraliza a letra e o radio button na coluna */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    font-weight: bold; /* Deixa a letra em negrito */
+    text-align: center; /* Centraliza o texto (a letra) */
+  }
+
+  .day-selector-compact input[type="radio"] {
+      margin-top: 5px; /* Adiciona um pequeno espaço entre a letra e o radio button */
+  }
+
+#tipo_recorrente{
+    display: none;
+}

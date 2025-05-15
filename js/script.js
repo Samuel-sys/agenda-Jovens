@@ -76,9 +76,8 @@ async function generateCalendario () {
   $mes.value = today
     .toLocaleDateString('pt-BR', { month: 'long' })
     .toUpperCase()
-  $cabecalho.querySelector('#ano').value = today
+  $ano.value = today
     .toLocaleDateString('pt-BR', { year: 'numeric' })
-    .toUpperCase()
 
   const firstDay = new Date(year, month, 1).getDay()
   const daysInMonth = new Date(year, month + 1, 0).getDate() // último dia do mês
