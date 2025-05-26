@@ -3,7 +3,7 @@ const $calendarioEl = document.querySelector('.calendario')
 const $eventListEl = document.querySelector('#event-list')
 const $eventDetailEl = document.querySelector('#event-detail')
 const $eventDateEl = document.querySelector('#event-date')
-const $cabecalho = document.querySelector('#cabecalho')
+// const $cabecalho = document.querySelector('#cabecalho') não estamos utilizando por hora
 const $mes = document.querySelector('#mes')
 const $ano = document.querySelector('#ano')
 
@@ -65,11 +65,11 @@ $ano.addEventListener('input', () => {
   generateCalendario()
 })
 
+//Evento de comunicação do firebase com o site
 import { buscarEventosDoMesAtual } from './sdk_firebase.js'
 
 async function generateCalendario () {
   eventos_agenda = await buscarEventosDoMesAtual(year, month)
-  console.log('eventos_agenda', eventos_agenda)
 
   // Atualiza o valor do campo de data
   $eventDateEl.value = today.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric'}).toUpperCase
@@ -172,3 +172,39 @@ function setModoCalendario (modo) {
   }
 }
 
+const $captura = document.getElementById('btn-baixar-calendario')
+$captura.addEventListener('click', () => {
+  const $agenda = document.querySelector('.agenda')
+  const $cabecalho = document.querySelector('#cabecalho')
+
+  // $cabecalho.innerHTML = `<h1>${$mes.value} DE ${$ano.value} </h1>`
+  const h1 = document.createElement('h1')
+  h1.textContent = `${$mes.value} DE ${$ano.value}`
+  h1.style.width = '100%' 
+  h1.style.textAlign = 'center' 
+  $agenda.prepend(h1) // preciso dele no topo e não embaixo ****
+
+  const dias = document.querySelectorAll('.day')
+  dias.forEach(d => d.classList.remove('selected'))
+
+  if (!$agenda) {
+    alert('Calendário não encontrado.')
+    return
+  }
+
+  document.querySelector('#esconder').style.display = 'none'
+  $cabecalho.style.display = 'none' // oculta o botão após o clique
+  $captura.style.display = 'none' // oculta o botão após o clique
+
+  html2canvas($agenda).then(canvas => {
+    const link = document.createElement('a')
+    link.download = 'calendario.png'
+    link.href = canvas.toDataURL('image/png')
+    link.click()
+  })
+
+  document.querySelector('#esconder').style.display = 'block'
+  $cabecalho.style.display = 'flex'
+  $captura.style.display = 'block'
+  $agenda.removeChild(h1)
+})

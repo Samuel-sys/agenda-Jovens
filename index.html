@@ -16,16 +16,17 @@
 <body>
 
 
-    <div class="agenda">
+    <div class="agenda"><button id="btn-baixar-calendario" type="button">📸</button>
+
         <div id="cabecalho">
             <input type="button" id="mes"> <b> \ </b> <input type="number" id="ano">
         </div>
         <div class="calendario"></div>
 
         <div class="legenda">
-            <p><span style="color: red">■</span> Data selecionada</p>
-            <p><span style="color: #000059">■</span> Evento do grupo UMADEB</p>
-            <p><span style="color: #5E287C">■</span> Evento do grupo CREIO</p>
+            <p id='esconder' ><span style="color: var(--selected)">■</span> Data selecionada</p>
+            <p><span style="color: var(--umadeb)">■</span> Evento do grupo UMADEB</p>
+            <p><span style="color: var(--creio)">■</span> Evento do grupo CREIO</p>
         </div>
     </div>
 
@@ -36,7 +37,9 @@
     </div>
 
 
-    <script src="js/script.js" type='module'></script>
+    <script src="js/index.js" type='module'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </body>
 
 </html>

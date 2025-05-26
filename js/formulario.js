@@ -1,5 +1,3 @@
-import { Timestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js'
-
 const $form = document.querySelector('#form-evento')
 const $grupo = document.querySelector('#grupo')
 const $titulo = document.querySelector('#titulo')
@@ -12,6 +10,8 @@ const $tipo_evento = document.querySelector('#tipo_evento')
 window.onload = () => {
   $ano.value = new Date().toLocaleDateString('pt-BR', { year: 'numeric' })
 }
+
+import { cadastraEvento } from './sdk_firebase.js'
 
 $tipo_evento.addEventListener('change', () => {
   console.log($tipo_evento.checked)
@@ -50,38 +50,14 @@ $form.addEventListener('submit', async function (e) {
 
       const datas = getDatasRecorrentes(ano, semana, diaSemana)
 
-      for (const data of datas) {
-        const dataTimestamp = Timestamp.fromDate(data)
-        const docRef = window.firebaseDoc(
-          window.firebaseCollection(window.firebaseDB, 'eventos')
-        )
-
-        await window.firebaseSetDoc(docRef, {
-          grupo,
-          titulo,
-          detalhes,
-          data: dataTimestamp,
-          ativo: true
-        })
-      }
+      for (const data of datas)
+        await cadastraEvento({ grupo, titulo, detalhes, data })
 
       alert(`Foram salvos ${datas.length} eventos recorrentes com sucesso!`)
     } else {
       // Evento único
-      const data = $data.value
-      const dataTimestamp = Timestamp.fromDate(new Date(data))
-
-      const docRef = window.firebaseDoc(
-        window.firebaseCollection(window.firebaseDB, 'eventos')
-      )
-
-      await window.firebaseSetDoc(docRef, {
-        grupo,
-        titulo,
-        detalhes,
-        data: dataTimestamp,
-        ativo: true
-      })
+      const data = $data.value //pegamos a data que o usuario selecionou no forms
+      await cadastraEvento({ grupo, titulo, detalhes, data })
 
       alert('Evento salvo com sucesso!')
     }
@@ -93,45 +69,6 @@ $form.addEventListener('submit', async function (e) {
   }
 })
 
-// $form.addEventListener('submit', async function (e) {
-//   e.preventDefault()
-// //Pega os dados preenchidos no formulário
-//   const grupo = $grupo.value
-//   const titulo = $titulo.value
-//   const detalhes = $detalhes.value
-//   const data = $data.value
-
-//   //se o usuario não preencheu todos os campos, não envia o formulário
-//   if (!grupo || !titulo || !detalhes || !data) {
-//     alert('Preencha todos os campos!')
-//     return
-//   }
-
-//   //converte a data para um objeto Timestamp
-//   const dataTimestamp = Timestamp.fromDate(new Date(data))
-
-//   try {
-//     const docRef = window.firebaseDoc(
-//       window.firebaseCollection(window.firebaseDB, 'eventos')
-//     )
-
-//     //salva o evento no Firestore (campo ID e gerado automaticamente pelo Firebase)
-//     await window.firebaseSetDoc(docRef, {
-//       grupo,
-//       titulo,
-//       detalhes,
-//       data: dataTimestamp,
-//       ativo: true
-//     })
-
-//     alert('Evento salvo com sucesso!')
-//     document.getElementById('form-evento').reset()
-//   } catch (error) {
-//     console.error('Erro ao salvar evento:', error)
-//     alert('Erro ao salvar evento.')
-//   }
-// })
-
 const diasSemanaMap = {
   domingo: 0,
   segunda: 1,
@@ -141,7 +78,6 @@ const diasSemanaMap = {
   sexta: 5,
   sabado: 6
 }
-
 function getDatasRecorrentes (ano, numeroSemana, diaSemana) {
   const datas = []
   const hoje = new Date()

@@ -7,7 +7,8 @@ import {
   doc,
   query, // <-- ESSENCIAL
   where, // <-- ESSENCIAL
-  Timestamp // <-- ESSENCIAL
+  Timestamp, // <-- ESSENCIAL
+  updateDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js'
 
 const firebaseConfig = {
@@ -28,6 +29,11 @@ window.firebaseCollection = collection
 window.firebaseSetDoc = setDoc
 window.firebaseGetDocs = getDocs
 window.firebaseDoc = doc
+
+// Função para converter data para Timestamp
+function dataTimestamp (data) {
+  return Timestamp.fromDate(new Date(data))
+}
 
 // Função para buscar eventos do mês atual
 export async function buscarEventosDoMesAtual (year, month) {
@@ -53,7 +59,8 @@ export async function buscarEventosDoMesAtual (year, month) {
       grupo: doc.data().grupo.toUpperCase(),
       titulo: doc.data().titulo,
       detalhe: doc.data().detalhes,
-      id: doc.id
+      id: doc.id,
+      ativo: doc.data().ativo
     }
 
     // Adiciona ao objeto final, agrupando por data
@@ -65,4 +72,52 @@ export async function buscarEventosDoMesAtual (year, month) {
 
   console.log(eventos)
   return eventos
+}
+
+export async function cadastraEvento ({ grupo, titulo, detalhes, data }) {
+  const docRef = window.firebaseDoc(
+    window.firebaseCollection(window.firebaseDB, 'eventos')
+  )
+
+  await window.firebaseSetDoc(docRef, {
+    grupo,
+    titulo,
+    detalhes,
+    data: dataTimestamp(data), // movi essa função para dentro do arquivo firebase.js assim ele não precisa ficar convertendo para timestamp
+    ativo: true
+  })
+}
+
+export async function cancelarEventoID (id) {
+  const docRef = doc(db, 'eventos', id)
+  try {
+    await updateDoc(docRef, { ativo: false })
+    console.log(`Evento com ID ${id} cancelado com sucesso.`)
+  } catch (error) {
+    console.error('Erro ao cancelar evento:', error)
+  }
+}
+
+async function cancelarEvento (campo, operador, valor) {
+  // Se valor for um objeto Date, converte para Timestamp
+  if (valor instanceof Date) {
+    valor = dataTimestamp(valor)
+  }
+
+  //filtra o "evento" do ID informado pelo usuario
+  const q = query(collection(db, 'eventos'), where(campo, operador, valor))
+  const snapshot = await getDocs(q) // puxa a lista de objetos do firebase com os parametros que o usuario informou
+
+  if (snapshot.empty) {
+    console.log(`Nenhum evento encontrado com esse id ${valor}`)
+    return
+  }
+
+  //loop para cancelar cada evento encontrado
+  for (const docSnap of snapshot.docs) {
+    await window.firebaseUpdateDoc(docSnap.ref, {
+      ativo: false
+    })
+    console.log(`Evento com ID do Firestore = ${docSnap.titulo} cancelado.`)
+  }
 }
